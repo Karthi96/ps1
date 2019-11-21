@@ -1,0 +1,117 @@
+{{define "title"}}Check{{end}}
+
+{{define "body"}}
+<h1>Check Student Record</h1>
+
+
+
+<form class="form-inline" action="request.html" method="post" onsubmit="myFunction()">
+    <div class="form-group">
+        <label for="helloValue">Enter RollNo</label>
+        <input type="text" class="form-control" id="rollno" placeholder="Your RollNo ..." name="rollno" required>
+        <select class="form-control" id="course" name="course">
+                <option value="All">All</option>
+                <option value="Blockchain">Blockchain</option>
+                <option value="Machine Learning">Machine Learning</option>
+                <option value="Data Science">Data Science</option>
+                <option value="Artificial Intelligence">Artificial Intelligence</option>
+             </select>
+    </div>
+    <input type="hidden" name="submitted" value="true">
+    <button type="submit">Search</button>
+</form>
+
+{{range.}}
+{{if .EditCall}}
+{{ if .Response }}
+<br>
+{{ if .Success }}
+<div class="alert alert-success" role="alert">
+    Successfully updated request, {{ .TransactionId }}
+</div>
+{{ else }}
+<div class="alert alert-danger" role="alert">
+    Failed Request: {{.ErrorMessage}}.
+</div>
+{{ end }}
+{{ end }}
+{{else}}
+{{ if .Response }}
+<br><br>
+{{ if .Success }}
+<div class="form-group">
+    <table id="customers">
+        <tr>
+            <td>RollNo</td>
+            <td>Name</td>
+            <td>Course</td>
+            <td>Grade</td>
+            <td>Details</td>
+            <td>Date</td>
+            <td>Option</td>
+
+        </tr>
+        <tr>
+            <td>{{.RollNo}}</td>
+            <td>{{.Name}}</td>
+            <td>{{.Course}}</td>
+            <td>{{.Grade}}</td>
+            <td>{{.Details}}</td>
+            <td>{{.Date}}</td>
+            <td><button class="open-button" onclick="openForm('{{.RollNo}}','{{.Name}}','{{.Course}}','{{.Grade}}','{{.Details}}','{{.Date}}')"> Edit</button> </td>
+
+        </tr>
+
+    </table>
+</div>
+<br><br>
+
+{{ else }}
+<div class="alert alert-danger" role="alert">
+    {{.ErrorMessage}}.
+</div>
+{{ end }}
+{{ end }}
+{{end}}
+{{end}}
+<div class="form-popup" id="myForm">
+        <form action="request.html" method="post" onsubmit="myFunction()">
+            <h3>Edit the Record of student</h3>
+    
+            <label for="erollno"><b>RollNo</b></label>
+            <input type="text" placeholder="Your Rollno" id="erollno" name="erollno"  readonly>
+    
+            <label for="ename"><b>Name</b></label>
+            <input type="text" placeholder="Your Rollno" id="ename" name="ename"  required>
+    
+            <label for="ecourse"><b>Course</b></label>
+            <input type="text" placeholder="Your Course" id="ecourse" name="ecourse"  readonly>
+              
+            <label for="egrade"><b>Grade</b></label>
+            <select id="egrade" name="egrade">
+                <option value="S">S</option>
+                <option value="A">A</option>
+                <option value="B">B</option>
+                <option value="C">C</option>
+                <option value="D">D</option>
+                <option value="E">E</option>
+            </select>
+    
+            <label for="edetails"><b>Details</b></label>
+            <input type="text" placeholder="Your details" id="edetails" name="edetails"  required>
+    
+            <label for="edate"><b>Date</b></label><br>
+            <input type="date" placeholder="Your date" id="edate" name="edate"  required>
+    
+            <input type="hidden" name="submitted_edit" value="true">
+            <button type="submit" class="btn">Save</button>
+    
+            <button type="button" class="btn cancel" onclick="closeForm()">Cancel</button>
+    
+           
+    
+    
+    
+        </form>
+    </div>
+{{end}}

@@ -1,0 +1,288 @@
+{{define "layout"}}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>PowerSchool - {{template "title"}}</title>
+    <link href="/assets/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/assets/css/bootstrap-theme.min.css" rel="stylesheet">
+    <link href="/assets/css/styles.css" rel="stylesheet">
+    <script src="/assets/js/jquery-3.2.1.min.js"></script>
+    <script src="/assets/js/bootstrap.min.js"></script>
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+    <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
+
+    <script>
+        $(document).ready(function () {
+
+            document.getElementById("loader").style.display = "none";
+        });
+
+        $(window).on('load', function () {
+            document.getElementById("loader").style.display = "block";
+        });
+
+        function openForm(RollNo, Name, COurse, Grade, Details, Date1) {
+            document.getElementById("myForm").style.display = "block";
+            document.getElementById("erollno").value = RollNo;
+            document.getElementById("ename").value = Name;
+            document.getElementById("edate").value = Date1;
+            document.getElementById("edetails").value = Details;
+            document.getElementById("ecourse").value = COurse;
+
+            var objSelect = document.getElementById("egrade");
+            for (var i = 0; i < objSelect.options.length; i++) {
+                if (objSelect.options[i].text == Grade) {
+                    objSelect.options[i].selected = true;
+                    break;
+                }
+            }
+
+        }
+        function closeForm() {
+            document.getElementById("myForm").style.display = "none";
+        }
+        function myFunction() {
+            document.getElementById("loader").style.display = "block";
+        }
+
+    </script>
+    <style>
+        input[type=text],
+        select {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 14px 20px;
+            margin: 8px 0;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        input[type="date"] {
+            width: 100%;
+            padding: 12px 20px;
+            margin: 8px 0;
+            display: inline-block;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            box-sizing: border-box;
+        }
+
+        input[type=submit]:hover {
+            background-color: #45a049;
+        }
+
+        #customers {
+            font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
+            border-collapse: collapse;
+            width: 100%;
+        }
+
+        #customers td,
+        #customers th {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+
+        #customers tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+
+        #customers tr:hover {
+            background-color: #ddd;
+        }
+
+        #customers thead {
+            padding-top: 12px;
+            padding-bottom: 12px;
+            text-align: left;
+            background-color: #4CAF50;
+            color: white;
+        }
+
+        /* The popup form - hidden by default */
+        .form-popup {
+            display: none;
+            position: initial;
+            bottom: 0;
+            right: 15px;
+            border: 3px solid #a3e014;
+            z-index: 9;
+            float: none;
+            padding: 10px;
+        }
+
+
+        /* Add styles to the form container */
+        .form-container {
+            max-width: 300px;
+            padding: 10px;
+            background-color: white;
+        }
+
+        /* Full-width input fields */
+        .form-container input[type=text],
+        .form-container input[type=password] {
+            width: 100%;
+            padding: 15px;
+            margin: 5px 0 22px 0;
+            border: none;
+            background: #f1f1f1;
+        }
+
+        /* When the inputs get focus, do something */
+        .form-container input[type=text]:focus,
+        .form-container input[type=password]:focus {
+            background-color: #ddd;
+            outline: none;
+        }
+
+        /* Set a style for the submit/login button */
+        .form-container .btn {
+            background-color: #4CAF50;
+            color: white;
+            padding: 16px 20px;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            margin-bottom: 10px;
+            opacity: 0.8;
+        }
+
+        /* Add a red background color to the cancel button */
+        .form-container .cancel {
+            background-color: red;
+        }
+
+        /* Add some hover effects to buttons */
+        .form-container .btn:hover,
+        .open-button:hover {
+            opacity: 1;
+        }
+
+        .loader {
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            border: 16px solid #f3f3f3;
+            border-radius: 50%;
+            border-top: 16px solid blue;
+            border-bottom: 16px solid blue;
+            width: 120px;
+            height: 120px;
+            -webkit-animation: spin 2s linear infinite;
+            animation: spin 2s linear infinite;
+        }
+
+        @-webkit-keyframes spin {
+            0% {
+                -webkit-transform: rotate(0deg);
+            }
+
+            100% {
+                -webkit-transform: rotate(360deg);
+            }
+        }
+
+        @keyframes spin {
+            0% {
+                transform: rotate(0deg);
+            }
+
+            100% {
+                transform: rotate(360deg);
+            }
+        }
+
+        .stop {
+            position: absolute;
+            display: inline-block;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 20px;
+        }
+
+        /* body,
+        html {
+            height: 100%;
+            margin: 0;
+        }
+
+        .bg {
+           
+            background-image: url("https://www.publicdomainpictures.net/pictures/250000/velka/blockchain-money-chain-block.jpg");
+
+            
+             height: 100%;
+
+           
+            background-position: center;
+            background-repeat: no-repeat;
+            background-size: cover;
+        }  */
+    </style>
+</head>
+
+<body class="bg">
+
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#mainMenu"
+                    aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="/">
+                    <img src="/assets/images/NNT.png" alt="chainHero" title="NNT Blockchain" />
+                    PowerLedger
+                </a>
+            </div>
+
+            <div class="collapse navbar-collapse" id="mainMenu">
+                <ul class="nav navbar-nav">
+                    <li><a href="/home.html">Home</a></li>
+                    <li><a href="/add.html">Create </a></li>
+                    <li><a href="/request.html">Edit/Search</a></li>
+                    <li><a href="/history.html">History</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div class="loader" id="loader" style="display:none;">
+        
+    </div>
+    <main class="container">
+        {{template "body" .}}
+
+    </main>
+
+    <footer class="container text-center">
+        Hyperleger Fabric Blockchain developed by <a href="https://www.nirman.io/">Nggawe Nirman Technologies</a>.
+        <br>
+        <small>&copy; Copyright 2019, NNT</small>
+    </footer>
+</body>
+
+</html>
+{{end}}

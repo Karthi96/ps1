@@ -1,0 +1,63 @@
+{{define "title"}}History{{end}}
+
+{{define "body"}}
+<h1>History of a Student Record</h1>
+
+
+
+<form class="form-inline" action="history.html" method="post" onsubmit="myFunction()">
+    <div class="form-group">
+        <label for="helloValue">Enter RollNo</label>
+        <input type="text" class="form-control" id="rollno" placeholder="Your RollNo ..." name="rollno" required>
+        <select class="form-control" id="course" name="course">
+                <option value="All">All</option>
+                <option value="Blockchain">Blockchain</option>
+                <option value="Machine Learning">Machine Learning</option>
+                <option value="Data Science">Data Science</option>
+                <option value="Artificial Intelligence">Artificial Intelligence</option>
+            </select>
+    </div>
+    <input type="hidden" name="submitted" value="true">
+    <button type="submit">Search</button>
+</form>
+{{range.}}
+{{ if .Response }}
+<br><br>
+{{ if .Success }}
+<div class="form-group">
+    <table id="customers">
+        <tr>
+            <td>RollNo</td>
+            <td>Name</td>
+            <td>Course</td>
+            <td>Grade</td>
+            <td>Details</td>
+            <td>Date</td>
+            <td>Timestamp</td>
+            <td>Transaction ID</td>
+
+        </tr>
+       
+        <tr>
+            <td>{{.RollNo}}</td>
+            <td>{{.Name}}</td>
+            <td>{{.Course}}</td>
+            <td>{{.Grade}}</td>
+            <td>{{.Details}}</td>
+            <td>{{.Date}}</td>
+            <td>{{.LastModified}}</td>
+            <td>{{.TransactionID}}</td>
+        </tr>
+
+    </table>
+</div>
+<br><br>
+
+{{ else }}
+<div class="alert alert-danger" role="alert">
+   Failed Request:  {{.ErrorMessage}}
+</div>
+{{ end }}
+{{ end }}
+{{end}}
+{{end}}
